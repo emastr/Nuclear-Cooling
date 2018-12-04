@@ -645,6 +645,34 @@ def phaseDiagram():
     plt.scatter(Hw, Hp)
     plt.show()
 
+def phaseDiagram2():
+	"""Draw the classic phase diagram, on H against z with dHdz marked with small lines."""
+
+	
+	m = 10
+	n = 10
+	zmax = h
+	hmin = 500e3
+	hmax = 3000e3
+	z = np.linspace(0,zmax,m)
+	Hw_plot = np.linspace(hmin, hmax,n)
+
+
+	Hpx = [1]*len(Hw_plot)
+	Hpy = [1*dHWdz(getTPb(Hw2Hpb(H)), getTW(H), H)/hmax for H in Hw_plot]
+	plt.figure()
+	plt.plot(Hw_plot, Hpy, '.')
+	plt.show()
+	Z, H = np.meshgrid(z,Hw_plot)
+	Px, Py = np.meshgrid(Hpx,Hpy)
+
+	plt.figure()
+	plt.quiver(Z,H,Px,Py, headlength = 0, headwidth = 0)
+	plt.show()
+
+
+
+
 def parameterAnalysis2D():
 	"""Simulates the system for many different parameter choises and gives a plot of which
 	set of parameters meet all the requirements."""
@@ -689,8 +717,9 @@ updateConstants()
 ##print("dxdz:", dxdz)
 ##print(valid)
 ##updateConstants()
-simulate(True)
+# simulate(True)
 
+phaseDiagram2()
 #phaseDiagram()
 
 #convergenceError()
